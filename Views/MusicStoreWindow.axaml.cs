@@ -1,9 +1,9 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using MusicStore.ViewModels;
 using ReactiveUI;
-using System;
 
 namespace MusicStore.Views;
 

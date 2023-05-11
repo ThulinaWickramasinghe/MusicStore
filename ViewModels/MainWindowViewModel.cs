@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
+﻿using System.Reactive.Linq;
 using System.Windows.Input;
 using ReactiveUI;
 
@@ -14,7 +10,7 @@ public class MainWindowViewModel : ViewModelBase
     {
         ShowDialog = new Interaction<MusicStoreViewModel, AlbumViewModel>();
 
-        BuyMusicCommand = ReactiveCommand.Create( async () =>
+        BuyMusicCommand = ReactiveCommand.Create(async () =>
         {
             var store = new MusicStoreViewModel();
             var result = await ShowDialog.Handle(store);
@@ -22,5 +18,5 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     public ICommand BuyMusicCommand { get; }
-    public Interaction<MusicStoreViewModel,AlbumViewModel> ShowDialog { get; }
+    public Interaction<MusicStoreViewModel, AlbumViewModel> ShowDialog { get; }
 }

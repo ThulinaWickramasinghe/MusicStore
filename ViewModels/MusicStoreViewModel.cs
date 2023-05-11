@@ -9,28 +9,25 @@ using ReactiveUI;
 
 namespace MusicStore.ViewModels;
 
-public class MusicStoreViewModel: ViewModelBase
+public class MusicStoreViewModel : ViewModelBase
 {
-    private string? _searchText;
-    private bool _isBusy;
-    private AlbumViewModel? _selectedAlbum;
     private CancellationTokenSource? _cancellationTokenSource;
-
-    public ReactiveCommand<Unit, AlbumViewModel?> BuyMusicCommand { get; }
-    public ObservableCollection<AlbumViewModel> SearchResults { get; } = new();
+    private bool _isBusy;
+    private string? _searchText;
+    private AlbumViewModel? _selectedAlbum;
 
     public MusicStoreViewModel()
     {
-        BuyMusicCommand = ReactiveCommand.Create(() =>
-        {
-            return SelectedAlbum;
-        });
+        BuyMusicCommand = ReactiveCommand.Create(() => { return SelectedAlbum; });
 
         this.WhenAnyValue(x => x.SearchText)
             .Throttle(TimeSpan.FromMilliseconds(400))
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(DoSearch!);
     }
+
+    public ReactiveCommand<Unit, AlbumViewModel?> BuyMusicCommand { get; }
+    public ObservableCollection<AlbumViewModel> SearchResults { get; } = new();
 
     public AlbumViewModel? SelectedAlbum
     {
@@ -70,10 +67,7 @@ public class MusicStoreViewModel: ViewModelBase
                 SearchResults.Add(vm);
             }
 
-            if (!cancellationToken.IsCancellationRequested)
-            {
-                LoadCovers(cancellationToken);
-            }
+            if (!cancellationToken.IsCancellationRequested) LoadCovers(cancellationToken);
         }
 
         IsBusy = false;
@@ -85,10 +79,7 @@ public class MusicStoreViewModel: ViewModelBase
         {
             await album.LoadCover();
 
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return;
-            }
+            if (cancellationToken.IsCancellationRequested) return;
         }
     }
 }

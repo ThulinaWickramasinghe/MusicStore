@@ -9,6 +9,7 @@ public class AlbumViewModel : ViewModelBase
 {
     private readonly Album _album;
     private Bitmap? _cover;
+
     public AlbumViewModel(Album album)
     {
         _album = album;
